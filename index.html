@@ -3,36 +3,74 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Notes for LDD by archlx</title>
-
+    <title>Short pencil for long memory. by archlx</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
-    <div class="wrapper">
+
       <header>
-        <h1>Notes for LDD</h1>
-        <p>Notes for LDD</p>
-
-
-        <p class="view"><a href="https://github.com/archlx">View My GitHub Profile</a></p>
-
+        <h1>Short pencil for long memory.</h1>
+        <p>Notes #01--构建内核源码树</p>
       </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/archlx" class="button fork"><strong>View On GitHub</strong></a>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
       <section>
         <h1>
 <a name="archlxgithubio" class="anchor" href="#archlxgithubio"><span class="octicon octicon-link"></span></a>archlx.github.io</h1>
 
-<p>Hello World!</p>
+<p>要编写Linux的驱动，必须要构建内核源码树。</p>
+
+<p>内核源码树的作用是构造可以在Linux内核中装载和卸载的模块，因此若是要为目标板构造模块，必须保证用于构建内核源码树的内核版本需得与你的目标板中内核版本一致。笔者使用的目标板为i.MX6Q E9，官方给出的源码包linux_E9_3.0.35_for_Linux_v3.0.tar.bz2。</p>
+
+<ol>
+<li><p>解压源码包<br>
+<code>tar jxvf linux_E9_3.0.35_for_Linux_v3.0.tar.bz2</code></p></li>
+<li><p>进入内核源码目录<br>
+<code>cd ~/linux_E9_3.0.35_for_Linux</code></p></li>
+<li><p>修改内核源码根目录下Makefile、指定架构、交叉编译器<br>
+ARCH            = arm<br>
+CROSS_COMPILE   = /opt/arm-linux-gcc/bin/arm-none-linux-gnueabi-<br>
+注意行末不能有空格</p></li>
+<li><p>配置内核<br>
+<code>make menuconfig</code><br>
+直接载入源码中官方配置即可</p></li>
+<li><p>编译<br>
+<code>make</code></p></li>
+<li><p>编译模块<br>
+<code>make modules</code></p></li>
+<li><p>安装模块<br>
+<code>make modules_install</code></p></li>
+<li><p>完成后可在/lib/modules目录下看到以版本号命名的文件夹<br>
+[xxx@XXX ~]$ <code>cd /lib/modules</code><br>
+[xxx@XXX modules]$ <code>ls</code><br>
+3.0.35  3.16.2-1-ARCH  3.16.3-1-ARCH  extramodules-3.16-ARCH`<br>
+[xxx@XXX modules]$ </p></li>
+</ol>
+
+<p>至此即完成了内核源码树的构建</p>
       </section>
       <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
